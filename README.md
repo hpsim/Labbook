@@ -6,6 +6,9 @@ This repository holds data from OGL benchmark and simulation runs and a set of p
 ## Goals
   1. Full documentation of a simulation project
   2. Automate recuirring tasks like plotting of results
+  3. Simplify sharing of results
+  4. Provide a searchable data base of simulation inputs and results
+  5. Make cases rerunable
 
 ## Requirements
 
