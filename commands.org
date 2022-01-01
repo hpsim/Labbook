@@ -22,7 +22,7 @@ This file describes ideas how the labbook works and which commands are available
     Runs a simulation and sets the state to started. If copy flag is set the case is copied to a dedicated folder with the hash of the transforming function, otherwise only a simlink is created.
   3. postprocessing
   
-    Extracts results from the cases and sets the state to complete.
+    Extracts results from the cases and sets the state to complete. Initially, results are non-final, meaning they are added to the repo but flaged as non-final. Non final results can be purged easily or finallised and archived. 
     
   4. archive 
     
