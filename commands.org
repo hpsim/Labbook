@@ -2,15 +2,30 @@
 
 This file describes ideas how the labbook works and which commands are available. At the center of the labbook commands is a configuration file defining pipelines and dependencies
 
+* Creation
 - =labbook init project <template>=
 
-  Create a new project from template. Comparable to =git init= with some extras
+  Create a new project from template. Comparable to =git init= with some extras like adding:
+  1. a =.gitignore= file;
+  2. a =.labbook.json= file;
+  3. a =results= folder for archived results.
+
 - =labbook init campaign <name>=
 
-  Creates a new campaign folder and sets metadata, if folder exists subfolders are added to version control
+  Creates a new campaign folder with specified name and sets metadata, if folder exists subfolders are added to version control
   #+BEGIN_QUOTE
- base name results .gitignore .archive .config 
+ base name results .gitignore .archive .config
   #+END_QUOTE
+
+=- =labbook init campaign parameter_foo=
+
+ base  parameter_foo results .gitignore .archive .config
+
+- =labbook init new_base [parameter_foo/1] -m "Use parameter 1 for new base case"=
+
+ base results .archive/old_base_id
+
+* Execution
 - =labook execute <pipeline> <campaign/case>=
   
   Execute the pipeline for a full campaign or a specific case. There are four different pipeline types:
@@ -31,6 +46,8 @@ This file describes ideas how the labbook works and which commands are available
 - =labook rebase <campaign/case>=
 
   Sets =campaign/case= as new base case, archives all other cases
+
+* Log
   
 - =labbook checkout <revision>=
 
@@ -52,12 +69,3 @@ This file describes ideas how the labbook works and which commands are available
   #+BEGIN_QUOTE
   base results .gitignore .archive .config 
   #+END_QUOTE
-  
-=labbook init campaign parameter_foo=
-  
- base  parameter_foo results .gitignore .archive .config 
-  
-=labbook init new_base [parameter_foo/1] -m "Use parameter 1 for new base case" =
-  
- base results .archive/old_base_id
-
