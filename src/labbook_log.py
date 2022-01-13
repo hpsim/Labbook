@@ -9,6 +9,8 @@ from pygit2 import Repository
 
 class LogFile:
     def write(self, action, msg):
+        if not os.path.exists(".labbook"):
+            os.mkdir(".archive")
 
         host_name = os.uname().nodename
         branch = Repository(".").head.shorthand
