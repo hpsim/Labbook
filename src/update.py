@@ -8,6 +8,5 @@ def update(arguments, config, logger):
     file_logger = labbook_log.LogFile()
 
     logger.info("Updating dependencies")
-    check_output(["git", "submodule", "init"])
-    check_output(["git", "submodule", "update"])
+    check_output(["git", "submodule", "update", "--recursive", "--remote"])
     file_logger.write(action="update_depencies", msg="updated")
