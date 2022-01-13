@@ -15,9 +15,81 @@ Why does this file exist, and why not put this in __main__?
   Also see (1) from http://click.pocoo.org/5/setuptools/#setuptools-integration
 """
 import click
+import yaml
+import logging
+
+import init as labbook_init
+import build as labbook_build
+import create_cases
+
+def init_logger():
+    logging.basicConfig(level=logging.DEBUG)
+    logger = logging.getLogger()
+
+    config_file = "labbook.yml"
+
+    with open(config_file, "r") as config_handle:
+        config = yaml.safe_load(config_handle)
+
+    print(config)
+    return logger, config
+
+@click.group()
+@click.option('--debug/--no-debug', default=False)
+@click.pass_context
+def cli(ctx, debug):
+    # ensure that ctx.obj exists and is a dict (in case `cli()` is called
+    # by means other than the `if` block below)
+    ctx.ensure_object(dict)
+    ctx.obj['DEBUG'] = debug
+
+@cli.command()
+@click.option('--template', default="OpenFOAM")
+@click.option('--base', default="base")
+@click.option('--extra_build_flags', default="")
+@click.pass_context
+def init(ctx, **kwargs):
+    logger, config = init_logger()
+    labbook_init.init_labbook(kwargs, config, logger)
 
 
-@click.command()
-@click.argument('names', nargs=-1)
-def main(names):
-    click.echo(repr(names))
+@cli.command()
+@click.pass_context
+def rebase(ctx, **kwargs):
+    print("rebase", kwargs)
+
+
+@cli.command()
+@click.option('--dependency', default="")
+@click.option('--extra_build_flags', default="")
+@click.pass_context
+def build(ctx, **kwargs):
+    logger, config = init_logger()
+    labbook_build.labbook_build(kwargs, config, logger)
+
+
+@cli.command()
+@click.option('--case', default="")
+@click.pass_context
+def create_cases(ctx, **kwargs):
+    logger, config = init_logger()
+    labbook_build.labbook_build(kwargs, config, logger)
+
+
+@cli.command()
+@click.option('--pipeline', default=None)
+@click.pass_context
+def execute(ctx, **kwargs):
+    print("execute",kwargs)
+
+@cli.command()
+@click.option('--pipeline', default=None)
+@click.pass_context
+def update(ctx, **kwargs):
+    print("execute",kwargs)
+
+def main():
+    cli(obj={})
+
+if __name__ == '__main__':
+    cli(obj={})
