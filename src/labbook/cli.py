@@ -78,7 +78,7 @@ def build(ctx, **kwargs):
 @click.pass_context
 def create_cases(ctx, **kwargs):
     logger, config = init_logger()
-    labbook_build.labbook_build(kwargs, config, logger)
+    create_cases.create_cases(kwargs, config, logger)
 
 
 @cli.command()
