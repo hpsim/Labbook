@@ -20,7 +20,9 @@ import logging
 
 import init as labbook_init
 import build as labbook_build
+import freeze
 import create_cases
+
 
 def init_logger():
     logging.basicConfig(level=logging.DEBUG)
@@ -34,19 +36,21 @@ def init_logger():
     print(config)
     return logger, config
 
+
 @click.group()
-@click.option('--debug/--no-debug', default=False)
+@click.option("--debug/--no-debug", default=False)
 @click.pass_context
 def cli(ctx, debug):
     # ensure that ctx.obj exists and is a dict (in case `cli()` is called
     # by means other than the `if` block below)
     ctx.ensure_object(dict)
-    ctx.obj['DEBUG'] = debug
+    ctx.obj["DEBUG"] = debug
+
 
 @cli.command()
-@click.option('--template', default="OpenFOAM")
-@click.option('--base', default="base")
-@click.option('--extra_build_flags', default="")
+@click.option("--template", default="OpenFOAM")
+@click.option("--base", default="base")
+@click.option("--extra_build_flags", default="")
 @click.pass_context
 def init(ctx, **kwargs):
     logger, config = init_logger()
@@ -60,8 +64,8 @@ def rebase(ctx, **kwargs):
 
 
 @cli.command()
-@click.option('--dependency', default="")
-@click.option('--extra_build_flags', default="")
+@click.option("--dependency", default="")
+@click.option("--extra_build_flags", default="")
 @click.pass_context
 def build(ctx, **kwargs):
     logger, config = init_logger()
@@ -69,7 +73,7 @@ def build(ctx, **kwargs):
 
 
 @cli.command()
-@click.option('--case', default="")
+@click.option("--case", default="")
 @click.pass_context
 def create_cases(ctx, **kwargs):
     logger, config = init_logger()
@@ -77,19 +81,30 @@ def create_cases(ctx, **kwargs):
 
 
 @cli.command()
-@click.option('--pipeline', default=None)
+@click.option("--pipeline", default=None)
 @click.pass_context
 def execute(ctx, **kwargs):
-    print("execute",kwargs)
+    print("execute", kwargs)
+
 
 @cli.command()
-@click.option('--pipeline', default=None)
+@click.option("--message", default=None)
+@click.pass_context
+def freeze(ctx, **kwargs):
+    logger, config = init_logger()
+    freeze.freeze(kwargs, config, logger)
+
+
+@cli.command()
+@click.option("--pipeline", default=None)
 @click.pass_context
 def update(ctx, **kwargs):
-    print("execute",kwargs)
+    print("execute", kwargs)
+
 
 def main():
     cli(obj={})
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     cli(obj={})

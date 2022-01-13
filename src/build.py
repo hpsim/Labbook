@@ -2,6 +2,7 @@
 
 import os
 import re
+import subprocess
 from subprocess import check_output
 import labbook_log
 
@@ -17,7 +18,13 @@ def build_submodule(logger, submodule):
         for env_var in env_variables:
             step = step.replace("${{env." + env_var + "}}", os.environ.get(env_var, ""))
         logger.info("Execute: " + step)
-        print(check_output(step.split(" "), cwd=path))
+        try:
+            ret = check_output(step.split(" "), cwd=path)
+            print(ret.decode("utf-8"))
+
+        except subprocess.CalledProcessError as e:
+            print(e.output.decode("utf-8"))
+
     file_logger.write(action="build_submodule", msg=submodule["name"])
 
 
