@@ -21,6 +21,7 @@ import logging
 import init as labbook_init
 import build as labbook_build
 import freeze
+import update
 import create_cases
 
 
