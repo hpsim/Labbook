@@ -27,10 +27,13 @@ class LogFile:
             "branch": branch,
         }
 
-        with open(fn, "r+") as fh:
-            if exists:
-                history = json.load(fh)
-                history.append(dct)
-                json.dump(history, fh)
-            else:
-                json.dump([dct], fh)
+        if not os.path.isfile(fn):
+            with open(fn, mode="w") as f:
+                f.write(json.dumps([dct], indent=2))
+        else:
+            with open(fn) as feedsjson:
+                feeds = json.load(feedsjson)
+
+            feeds.append(dct)
+            with open(fn, mode="w") as f:
+                f.write(json.dumps(feeds, indent=2))
