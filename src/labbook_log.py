@@ -27,7 +27,7 @@ class LogFile:
             "branch": branch,
         }
 
-        with open(fn, "w") as fh:
+        with open(fn, "rw") as fh:
             if exists:
                 history = json.load(fh)
                 history.append(dct)
