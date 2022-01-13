@@ -96,10 +96,11 @@ def freeze(ctx, **kwargs):
 
 
 @cli.command()
-@click.option("--pipeline", default=None)
+@click.option("--name", default=None)
 @click.pass_context
-def update(ctx, **kwargs):
-    print("execute", kwargs)
+def update_dependecies(ctx, **kwargs):
+    logger, config = init_logger()
+    update.update(kwargs, config, logger)
 
 
 def main():
