@@ -22,7 +22,7 @@ import init as labbook_init
 import build as labbook_build
 import freeze
 import update
-import create_cases
+import create_cases as labbook_create
 
 
 def init_logger():
@@ -78,7 +78,7 @@ def build(ctx, **kwargs):
 @click.pass_context
 def create_cases(ctx, **kwargs):
     logger, config = init_logger()
-    create_cases.create_cases(kwargs, config, logger)
+    labbook_create.create_cases(kwargs, config, logger)
 
 
 @cli.command()
