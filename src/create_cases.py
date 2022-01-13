@@ -5,6 +5,7 @@
 def create_cases(arguments, config, logger):
     # get build matrix
     # execute case recipe
+    file_logger = labbook_log.LogFile()
     case = arguments.get("case", None)
     case_config = config.get("cases", {}).get(case, None)
     if not case or not case_config:
@@ -27,3 +28,11 @@ def create_cases(arguments, config, logger):
                     step = step.replace(
                         "${{values." + value + "}}", build_params.get(value, "")
                     )
+            logger.info("Execute: " + step)
+            try:
+                ret = check_output(step.split(" "), cwd=path)
+                print(ret.decode("utf-8"))
+
+            except subprocess.CalledProcessError as e:
+                print(e.output.decode("utf-8"))
+        file_logger.write(action="create_case", msg=case)
