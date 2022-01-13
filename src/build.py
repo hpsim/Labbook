@@ -14,6 +14,8 @@ def build_submodule(logger, submodule):
     file_logger = labbook_log.LogFile()
 
     for step in steps:
+        if not step:
+            continue
         env_variables = re.findall(r"\${{env\.(\w+)}}", step)
         for env_var in env_variables:
             step = step.replace("${{env." + env_var + "}}", os.environ.get(env_var, ""))
