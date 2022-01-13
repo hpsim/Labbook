@@ -98,7 +98,7 @@ def freeze(ctx, **kwargs):
 @cli.command()
 @click.option("--name", default=None)
 @click.pass_context
-def update_dependecies(ctx, **kwargs):
+def update_dependencies(ctx, **kwargs):
     logger, config = init_logger()
     update.update(kwargs, config, logger)
 
