@@ -17,5 +17,5 @@ def build_submodule(logger, submodule):
 
 def labbook_build(arguments, config, logger):
     for submodule in config.get("submodules", []):
-        if submodule.get("build", False):
+        if submodule.get("run", False):
             build_submodule(logger, submodule)

@@ -25,7 +25,7 @@ def create_cases(arguments, config, logger):
 
         build_matrix = case_config.get("matrix", [])
 
-        raw_build_command = case_config["build"]
+        raw_build_command = case_config["run"]
         steps = raw_build_command.split("\n")
         path = case
 
