@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
 
-import os
-import re
 import subprocess
-from subprocess import check_output
 import labbook_log
+from core import execute
 
 
 def build_submodule(logger, submodule):
@@ -12,22 +10,9 @@ def build_submodule(logger, submodule):
     path = "Dependencies/" + submodule["name"]
     steps = raw_build_command.split("\n")
     file_logger = labbook_log.LogFile()
-
-    for step in steps:
-        if not step:
-            continue
-        env_variables = re.findall(r"\${{env\.(\w+)}}", step)
-        for env_var in env_variables:
-            step = step.replace("${{env." + env_var + "}}", os.environ.get(env_var, ""))
-        logger.info("Execute: " + step)
-        try:
-            ret = check_output(step.split(" "), cwd=path)
-            print(ret.decode("utf-8"))
-
-        except subprocess.CalledProcessError as e:
-            print(e.output.decode("utf-8"))
-
-    file_logger.write(action="build_submodule", msg=submodule["name"])
+    success = execute(steps, path, {})
+    if sucess:
+        file_logger.write(action="build_submodule", msg="build" + submodule["name"])
 
 
 def labbook_build(arguments, config, logger):

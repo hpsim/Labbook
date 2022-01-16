@@ -83,9 +83,13 @@ def create_cases(ctx, **kwargs):
 
 @cli.command()
 @click.option("--pipeline", default=None)
+@click.option("--case", default=None)
 @click.pass_context
 def execute(ctx, **kwargs):
-    print("execute", kwargs)
+    import pipeline
+
+    logger, config = init_logger()
+    pipeline.execute(kwargs, config, logger)
 
 
 @cli.command()
