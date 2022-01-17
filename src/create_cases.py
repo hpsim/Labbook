@@ -11,7 +11,7 @@ def create_cases(arguments, config, logger):
     # execute case recipe
     case = arguments.get("case", None)
     cases_configs = config.get("cases", [])
-    if not case or not cases_config:
+    if not case or not cases_configs:
         return
 
     for case_config in cases_configs:

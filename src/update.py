@@ -4,7 +4,7 @@ from subprocess import check_output
 import labbook_log
 
 
-def update(arguments, config, logger):
+def dependencies(arguments, config, logger):
     file_logger = labbook_log.LogFile()
 
     logger.info("Updating dependencies")

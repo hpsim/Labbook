@@ -21,7 +21,6 @@ import logging
 import init as labbook_init
 import build as labbook_build
 import freeze
-import update
 import create_cases as labbook_create
 
 
@@ -102,10 +101,14 @@ def freeze(ctx, **kwargs):
 
 @cli.command()
 @click.option("--name", default=None)
+@click.option("--dependencies", default=False)
 @click.pass_context
-def update_dependencies(ctx, **kwargs):
+def sync(ctx, **kwargs):
+    import update
+
     logger, config = init_logger()
-    update.update(kwargs, config, logger)
+    if kwargs.get("dependencies"):
+        update.dependencies(kwargs, config, logger)
 
 
 @cli.command()
