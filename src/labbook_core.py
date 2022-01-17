@@ -4,6 +4,7 @@ import hashlib
 import pygit2
 import re
 import os
+import labbook_log
 from subprocess import check_output
 
 
@@ -15,7 +16,8 @@ def parse_variables(in_str, args, domain):
     return in_str
 
 
-def execute(steps, path, matrix):
+def execute(steps, path, matrix, logger):
+    file_logger = labbook_log.LogFile()
     for step in steps:
         if not step:
             continue
@@ -26,7 +28,7 @@ def execute(steps, path, matrix):
         try:
             ret = check_output(step.split(" "), cwd=path)
             print(ret.decode("utf-8"))
-
+            file_logger.write(action="execute", msg=step)
         except subprocess.CalledProcessError as e:
             print(e.output.decode("utf-8"))
             return False

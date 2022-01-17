@@ -3,14 +3,12 @@ import os
 import re
 import subprocess
 from subprocess import check_output
-import labbook_log
 from labbook_core import execute
 
 
 def create_cases(arguments, config, logger):
     # get build matrix
     # execute case recipe
-    file_logger = labbook_log.LogFile()
     case = arguments.get("case", None)
     cases_config = config.get("cases", [])
     if not case or not cases_config:
@@ -31,5 +29,4 @@ def create_cases(arguments, config, logger):
 
         if build_matrix:
             for build_params in build_matrix:
-                execute(steps, path, build_params)
-            file_logger.write(action="create_case", msg=case)
+                execute(steps, path, build_params, logger)
