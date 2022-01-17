@@ -5,7 +5,7 @@ import pygit2
 import re
 import os
 import labbook_log
-from subprocess import check_output
+import subprocess
 
 
 def parse_variables(in_str, args, domain):
@@ -16,7 +16,7 @@ def parse_variables(in_str, args, domain):
     return in_str
 
 
-def execute(steps, path, matrix, logger):
+def execute(steps, path, matrix, logger, file_logger):
     file_logger = labbook_log.LogFile()
     for step in steps:
         if not step:
@@ -26,7 +26,7 @@ def execute(steps, path, matrix, logger):
         step = parse_variables(step, matrix, "matrix")
         logger.info("Execute: " + step)
         try:
-            ret = check_output(step.split(" "), cwd=path)
+            ret = subprocess.check_output(step.split(" "), cwd=path)
             print(ret.decode("utf-8"))
             file_logger.write(action="execute", msg=step)
         except subprocess.CalledProcessError as e:
@@ -37,7 +37,9 @@ def execute(steps, path, matrix, logger):
 
 def get_revision():
     submodule_hashes = (
-        check_output(["git", "submodule", "status"]).decode("utf8").split("\n")
+        subprocess.check_output(["git", "submodule", "status"])
+        .decode("utf8")
+        .split("\n")
     )
 
     submodule_hashes = [_.split() for _ in submodule_hashes if _]
