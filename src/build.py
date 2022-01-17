@@ -2,7 +2,7 @@
 
 import subprocess
 import labbook_log
-from core import execute
+from labbook_core import execute
 
 
 def build_submodule(logger, submodule):

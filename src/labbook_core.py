@@ -1,8 +1,36 @@
 #!/usr/bin/env python3
 
-from subprocess import check_output
 import hashlib
 import pygit2
+import re
+import os
+from subprocess import check_output
+
+
+def parse_variables(in_str, args, domain):
+
+    ocurrances = re.findall(r"\${{" + domain + "\.(\w+)}}", in_str)
+    for inst in ocurrances:
+        in_str = in_str.replace("${{" + domain + "." + inst + "}}", args.get(inst, ""))
+    return in_str
+
+
+def execute(steps, path, matrix):
+    for step in steps:
+        if not step:
+            continue
+        step = parse_variables(step, os.environ, "env")
+        step = parse_variables(step, {"cwd": path}, "labbook")
+        step = parse_variables(step, matrix, "matrix")
+        logger.info("Execute: " + step)
+        try:
+            ret = check_output(step.split(" "), cwd=path)
+            print(ret.decode("utf-8"))
+
+        except subprocess.CalledProcessError as e:
+            print(e.output.decode("utf-8"))
+            return False
+        return True
 
 
 def get_revision():

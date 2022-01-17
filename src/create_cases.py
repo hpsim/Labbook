@@ -4,7 +4,7 @@ import re
 import subprocess
 from subprocess import check_output
 import labbook_log
-from core import execute
+from labbook_core import execute
 
 
 def create_cases(arguments, config, logger):
