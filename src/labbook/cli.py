@@ -108,6 +108,18 @@ def update_dependencies(ctx, **kwargs):
     update.update(kwargs, config, logger)
 
 
+@cli.command()
+@click.option(
+    "-e", "--enviroment", default=None, help="Check if env vars in labbook are set"
+)
+@click.pass_context
+def validate(ctx, **kwargs):
+    import validate
+
+    logger, config = init_logger()
+    validate.validate_env(kwargs, config, logger)
+
+
 def main():
     cli(obj={})
 
