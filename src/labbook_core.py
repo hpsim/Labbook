@@ -22,7 +22,7 @@ def execute(steps, path, matrix, logger):
         if not step:
             continue
         step = parse_variables(step, os.environ, "env")
-        step = parse_variables(step, {"cwd": path}, "labbook")
+        step = parse_variables(step, {"cwd": path, "root": os.getcwd()}, "labbook")
         step = parse_variables(step, matrix, "matrix")
         logger.info("Execute: " + step)
         try:
