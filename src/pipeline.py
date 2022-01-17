@@ -5,11 +5,16 @@ from labbook_core import execute
 
 def execute(arguments, config, logger):
     """init a new project labbook"""
-    pipeline = arguments["pipeline"]
+    pipeline_name = arguments["pipeline"]
     case = arguments["case"]
+    pipelines = config["pipelines"]
 
-    raw_build_command = config[pipeline]["run"]
-    path = case
-    steps = raw_build_command.split("\n")
+    for pipeline in pipelines:
+        if not pipeline["name"] == pipeline_name:
+            continue
 
-    execute(steps, path, {}, logger)
+        raw_build_command = pipeline["run"]
+        path = case
+        steps = raw_build_command.split("\n")
+
+        execute(steps, path, {}, logger)
