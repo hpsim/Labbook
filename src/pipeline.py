@@ -8,7 +8,7 @@ def execute(arguments, config, logger):
     pipeline = arguments["pipeline"]
     case = arguments["case"]
 
-    raw_build_command = submodule["run"]
+    raw_build_command = config[pipeline]["run"]
     path = case
     steps = raw_build_command.split("\n")
 

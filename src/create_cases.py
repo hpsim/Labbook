@@ -10,11 +10,11 @@ def create_cases(arguments, config, logger):
     # get build matrix
     # execute case recipe
     case = arguments.get("case", None)
-    cases_config = config.get("cases", [])
+    cases_configs = config.get("cases", [])
     if not case or not cases_config:
         return
 
-    for case_config in cases_config:
+    for case_config in cases_configs:
         if not case_config["name"] == case:
             continue
         logger.info("creating case " + case)
