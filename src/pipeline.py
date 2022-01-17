@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from labbook_core import execute
+import labbook_core
 
 
 def execute(arguments, config, logger):
@@ -17,4 +17,4 @@ def execute(arguments, config, logger):
         path = case
         steps = raw_build_command.split("\n")
 
-        execute(steps, path, {}, logger)
+        labbook_core.execute(steps, path, {}, logger)
