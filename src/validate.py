@@ -10,7 +10,7 @@ def validate_env(arguments, _, logger):
     with open(config_file, "r") as config_handle:
         config = config_handle.read()
 
-    ocurrances = re.findall(r"\${{env" + "\.(\w+)}}", config)
+    ocurrances = set(re.findall(r"\${{env" + "\.(\w+)}}", config))
 
     for env in ocurrances:
         if not os.getenv(env):
