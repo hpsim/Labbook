@@ -18,3 +18,11 @@ def execute(arguments, config, logger):
         steps = raw_build_command.split("\n")
 
         labbook_core.execute(steps, path, {}, logger)
+
+        if pipeline.get("results"):
+            revision = labbook_core.get_revision().keys[0][0:8]
+            print(revision)
+            if not os.path.exists("results"):
+                os.mkdir("results")
+            if not os.path.exists("results/" + revision):
+                os.mkdir("results/" + revision)
