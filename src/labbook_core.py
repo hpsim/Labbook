@@ -16,7 +16,7 @@ def parse_variables(in_str, args, domain):
     return in_str
 
 
-def execute(steps, path, matrix, logger, file_logger):
+def execute(steps, path, matrix, logger):
     file_logger = labbook_log.LogFile()
     for step in steps:
         if not step:
