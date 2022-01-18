@@ -5,7 +5,7 @@ from labbook_core import execute
 
 
 def build_submodule(logger, submodule):
-    raw_build_command = submodule["build"]
+    raw_build_command = submodule["run"]
     path = "Dependencies/" + submodule["name"]
     steps = raw_build_command.split("\n")
     success = execute(steps, path, {}, logger)
