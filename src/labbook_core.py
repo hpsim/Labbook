@@ -32,7 +32,7 @@ def execute(steps, path, matrix, logger):
         except subprocess.CalledProcessError as e:
             print(e.output.decode("utf-8"))
             return False
-        return True
+    return True
 
 
 def get_revision():
