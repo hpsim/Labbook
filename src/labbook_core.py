@@ -24,7 +24,7 @@ def execute(steps, path, matrix, logger):
         step = parse_variables(step, os.environ, "env")
         step = parse_variables(step, {"cwd": path, "root": os.getcwd()}, "labbook")
         step = parse_variables(step, matrix, "matrix")
-        logger.info("Execute: " + step)
+        logger.info("Execute: " + step + " in " + path)
         try:
             ret = subprocess.check_output(step.split(" "), cwd=path)
             print(ret.decode("utf-8"))
