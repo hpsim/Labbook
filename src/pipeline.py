@@ -20,10 +20,15 @@ def execute(arguments, config, logger):
 
         labbook_core.execute(steps, path, {}, logger)
 
-        if pipeline.get("results"):
+        results = pipeline.get("results")
+        if results:
             revision = list(labbook_core.get_revision().keys())[0][0:8]
-            print(revision)
-            if not os.path.exists("results"):
-                os.mkdir("results")
-            if not os.path.exists("results/" + revision):
-                os.mkdir("results/" + revision)
+            results_path = "results/" + revision + "/" + case
+            os.makedirs(results_path, exist_ok=True)
+
+            for results_folder in results:
+                root, folder, files = next(os.walk(results_folder))
+                for f in folder:
+                    ret = subprocess.check_output(["cp", "-r", root + f, results_path])
+                for f in files:
+                    ret = subprocess.check_output(["cp", root + f, results_path])
