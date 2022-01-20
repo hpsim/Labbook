@@ -2,6 +2,7 @@
 
 import os
 import labbook_core
+import subprocess
 
 
 def execute(arguments, config, logger):
