@@ -28,7 +28,7 @@ def execute(arguments, config, logger):
             os.makedirs(results_path, exist_ok=True)
 
             for results_folder in results:
-                root, folder, files = next(os.walk(results_folder))
+                root, folder, files = next(os.walk(case + "/" + results_folder))
                 for f in folder:
                     ret = subprocess.check_output(
                         ["cp", "-r", root + "/" + f, results_path]
