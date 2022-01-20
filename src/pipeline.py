@@ -30,6 +30,8 @@ def execute(arguments, config, logger):
             for results_folder in results:
                 root, folder, files = next(os.walk(results_folder))
                 for f in folder:
-                    ret = subprocess.check_output(["cp", "-r", root + f, results_path])
+                    ret = subprocess.check_output(
+                        ["cp", "-r", root + "/" + f, results_path]
+                    )
                 for f in files:
-                    ret = subprocess.check_output(["cp", root + f, results_path])
+                    ret = subprocess.check_output(["cp", root + "/" + f, results_path])
