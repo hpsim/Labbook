@@ -10,7 +10,7 @@ from pygit2 import Repository
 class LogFile:
     def write(self, action, msg):
         if not os.path.exists(".labbook"):
-            os.mkdir(".archive")
+            os.mkdir(".labbook")
 
         host_name = os.uname().nodename
         branch = Repository(".").head.shorthand
@@ -37,3 +37,7 @@ class LogFile:
             feeds.append(dct)
             with open(fn, mode="w") as f:
                 f.write(json.dumps(feeds, indent=2))
+
+
+def show(arguments):
+    pass
