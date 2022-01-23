@@ -46,7 +46,11 @@ def get_revision():
 
     hashes = ""
 
-    for commit, path, branch in submodule_hashes:
+    for ret in submodule_hashes:
+        if len(ret) == 3:
+            commit, path, branch = ret
+        if len(ret) == 2:
+            commit, path = ret
         hashes += commit
 
     revision = hashlib.sha1(hashes.encode("utf-8"))
