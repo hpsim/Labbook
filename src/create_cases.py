@@ -18,14 +18,15 @@ def create_cases(arguments, config, logger):
         if not case_config["name"] == case:
             continue
         logger.info("creating case " + case)
-        if not os.path.exists(case):
-            os.mkdir(case)
+        path = case_config["path"]
+        print("Path", path)
+        if not os.path.exists(path):
+            os.mkdir(path)
 
         build_matrix = case_config.get("matrix", [])
 
         raw_build_command = case_config["run"]
         steps = raw_build_command.split("\n")
-        path = case
 
         if build_matrix:
             for build_params in build_matrix:
