@@ -136,7 +136,10 @@ def log(ctx, **kwargs):
 @cli.command()
 @click.pass_context
 def update(ctx, **kwargs):
+    import update
+
     logger, config = init_logger()
+    update.dependencies(kwargs, config, logger)
 
 
 def main():
