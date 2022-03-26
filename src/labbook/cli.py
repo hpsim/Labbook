@@ -54,6 +54,7 @@ def cli(ctx, debug):
 @click.pass_context
 def init(ctx, **kwargs):
     logger, config = init_logger()
+
     labbook_init.init_labbook(kwargs, config, logger)
 
 
@@ -121,6 +122,21 @@ def validate(ctx, **kwargs):
 
     logger, config = init_logger()
     validate.validate_env(kwargs, config, logger)
+
+
+@cli.command()
+@click.pass_context
+def log(ctx, **kwargs):
+    import validate
+
+    logger, config = init_logger()
+    validate.validate_env(kwargs, config, logger)
+
+
+@cli.command()
+@click.pass_context
+def update(ctx, **kwargs):
+    logger, config = init_logger()
 
 
 def main():
