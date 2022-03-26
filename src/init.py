@@ -88,7 +88,7 @@ def init_clean_labbook(arguments, config, logger, kind):
 
 def init_labbook(arguments, config, logger):
     """init a new project labbook"""
-    template = getattr(templates, arguments["--template"])(logger)
+    template = getattr(templates, arguments["template"])(logger)
     kind = template.kind()
 
     if not os.path.exists(".git"):
