@@ -25,6 +25,7 @@ class MyRemoteCallbacks(pygit2.RemoteCallbacks):
 
 
 def init_clean_labbook(arguments, config, logger, kind):
+    cwd = pathlib.Path(os.getcwd())
     logger.info("Initialising new {} labbook project".format(kind))
     repo = pygit2.init_repository(os.getcwd())
     index = repo.index
