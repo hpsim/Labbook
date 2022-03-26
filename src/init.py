@@ -2,7 +2,6 @@
 
 import os
 import templates
-import log as log
 import pathlib
 
 from subprocess import check_output
