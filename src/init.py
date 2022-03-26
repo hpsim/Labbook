@@ -26,7 +26,7 @@ class MyRemoteCallbacks(pygit2.RemoteCallbacks):
             return None
 
 
-def init_clean_labbook(arguments, config, logger, kind):
+def init_clean_labbook(arguments, config, logger, kind, template):
     """Init a clean labbook"""
     cwd = pathlib.Path(os.getcwd())
     logger.info("Initialising new {} labbook project".format(kind))
@@ -92,7 +92,7 @@ def init_labbook(arguments, config, logger):
     kind = template.kind()
 
     if not os.path.exists(".git"):
-        init_clean_labbook(arguments, config, logger, kind)
+        init_clean_labbook(arguments, config, logger, kind, template)
     else:
         logger.info("Initialising existing {} labbook project".format(kind))
 
