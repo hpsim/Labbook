@@ -50,10 +50,14 @@ def init_clean_labbook(arguments, config, logger, kind, template):
 
     for submodule in config.get("submodules", []):
         logger.info("Adding submodule " + submodule["name"])
-        repo.add_submodule(
-            path="Dependencies/" + submodule["name"],
-            url=submodule["repo"],
-            callbacks=MyRemoteCallbacks(),
+        check_output(
+            [
+                "git",
+                "submodule",
+                "add",
+                submodule["repo"],
+                "Dependencies/" + submodule["name"],
+            ]
         )
 
     if not os.path.exists("Results"):
