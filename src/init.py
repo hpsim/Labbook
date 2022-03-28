@@ -69,6 +69,8 @@ def init_clean_labbook(arguments, config, logger, kind, template):
             ]
         )
 
+    init_case(arguments, config, logger)
+
     if not os.path.exists("Results"):
         os.mkdir("Results")
 
