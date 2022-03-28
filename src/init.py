@@ -29,10 +29,10 @@ class MyRemoteCallbacks(pygit2.RemoteCallbacks):
 def init_case(arguments, config, logger):
     case_config = config.get("config")["case"]
     case_path = case_config["name"]
-    if not os.path.exists(case_path):
-        os.mkdir(case_path)
+    if not os.path.exists("case"):
+        os.mkdir("case")
     logger.info("Adding case " + case_path)
-    check_output(["git", "submodule", "add", case_config["repo"], case_path])
+    check_output(["git", "submodule", "add", case_config["repo"], "case/" + case_path])
 
 
 def init_clean_labbook(arguments, config, logger, kind, template):
