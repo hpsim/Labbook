@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-import subprocess
 from labbook_core import execute
 
 
