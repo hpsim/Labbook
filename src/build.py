@@ -13,4 +13,8 @@ def build_submodule(logger, submodule):
 def labbook_build(arguments, config, logger):
     for submodule in config.get("submodules", []):
         if submodule.get("run", False):
+            select = arguments.get("select")
+            if select:
+                if select not in submodule.get("name"):
+                    continue
             build_submodule(logger, submodule)
