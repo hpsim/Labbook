@@ -10,6 +10,7 @@ def create_cases(arguments, config, logger):
     # get build matrix
     # execute case recipe
     case = arguments.get("case", None)
+    select = arguments.get("select", None)
     cases_configs = config.get("cases", [])
     if not case or not cases_configs:
         return
@@ -30,4 +31,7 @@ def create_cases(arguments, config, logger):
 
         if build_matrix:
             for build_params in build_matrix:
+                if select:
+                    if select not in build_params.get("file"):
+                        continue
                 execute(steps, path, build_params, logger)

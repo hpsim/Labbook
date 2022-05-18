@@ -65,7 +65,7 @@ def rebase(ctx, **kwargs):
 
 
 @cli.command()
-@click.option("--dependency", default="")
+@click.option("--select", default="")
 @click.option("--extra_build_flags", default="")
 @click.pass_context
 def build(ctx, **kwargs):
@@ -75,6 +75,7 @@ def build(ctx, **kwargs):
 
 @cli.command()
 @click.option("--case", default="")
+@click.option("--select", default="")
 @click.pass_context
 def create_cases(ctx, **kwargs):
     logger, config = init_logger()
