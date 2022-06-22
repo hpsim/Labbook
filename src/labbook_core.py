@@ -5,6 +5,7 @@ import pygit2
 import re
 import os
 import labbook_log
+import sys
 import subprocess
 
 
@@ -26,9 +27,12 @@ def execute(steps, path, matrix, logger):
         step = parse_variables(step, matrix, "matrix")
         logger.info("Execute: " + step + " in " + path)
         try:
-            ret = subprocess.check_output(step.split(" "), cwd=path)
-            print(ret.decode("utf-8"))
-            file_logger.write(action="execute", msg=step)
+            process = subprocess.Popen(step.split(" "), stdout=subprocess.PIPE)
+            for c in iter(lambda: process.stdout.read(1), b""):
+                sys.stdout.buffer.write(c)
+            # ret = subprocess.check_output(step.split(" "), cwd=path)
+            # print(ret.decode("utf-8"))
+            # file_logger.write(action="execute", msg=step)
         except subprocess.CalledProcessError as e:
             print(e.output.decode("utf-8"))
             return False
