@@ -27,7 +27,9 @@ def execute(steps, path, matrix, logger):
         step = parse_variables(step, matrix, "matrix")
         logger.info("Execute: " + step + " in " + path)
         try:
-            process = subprocess.Popen(step.split(" "), stdout=subprocess.PIPE)
+            process = subprocess.Popen(
+                step.split(" "), cwd=path, stdout=subprocess.PIPE
+            )
             for c in iter(lambda: process.stdout.read(1), b""):
                 sys.stdout.buffer.write(c)
             # ret = subprocess.check_output(step.split(" "), cwd=path)
