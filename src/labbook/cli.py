@@ -33,7 +33,6 @@ def init_logger():
     with open(config_file, "r") as config_handle:
         config = yaml.safe_load(config_handle)
 
-    print(config)
     return logger, config
 
 
