@@ -8,7 +8,7 @@ import subprocess
 def get_campaign(config):
     submodule = config["config"]["campaign"]["submodule"]
     cmd = "git submodule foreach 'git branch --show-current'"
-    ret = subprocess(cmd.split(" ")).decode("utf-8").split("\n")
+    ret = subprocess.check_output(cmd.split(" ")).decode("utf-8").split("\n")
     print(ret)
     for i in range(len(ret) / 2, 2):
         if submodule in ret[2 * i]:
@@ -42,6 +42,9 @@ def execute(arguments, config, logger):
 
             for results_folder in results:
                 root, folder, files = next(os.walk(case + "/" + results_folder))
+                logger.info(
+                    "storing result folders " + str(folder) + " under " + results_path
+                )
                 for f in folder:
                     ret = subprocess.check_output(
                         ["cp", "-r", root + "/" + f, results_path]
