@@ -6,7 +6,7 @@ import subprocess
 
 
 def get_campaign(config):
-    submodule = config["config"]["submodule"]
+    submodule = config["config"]["campaign"]["submodule"]
     cmd = "git submodule foreach 'git branch --show-current'"
     ret = subprocess(cmd.split(" ")).decode("utf-8").split("\n")
     print(ret)
@@ -26,6 +26,7 @@ def execute(arguments, config, logger):
         if not pipeline["name"] == pipeline_name:
             continue
 
+        logger.info("executing pipeline", pipeline_name)
         raw_build_command = pipeline["run"]
         path = case
         steps = raw_build_command.split("\n")
