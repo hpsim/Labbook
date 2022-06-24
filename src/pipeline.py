@@ -26,7 +26,7 @@ def execute(arguments, config, logger):
         if not pipeline["name"] == pipeline_name:
             continue
 
-        logger.info("executing pipeline", pipeline_name)
+        logger.info("executing pipeline " + pipeline_name)
         raw_build_command = pipeline["run"]
         path = case
         steps = raw_build_command.split("\n")
