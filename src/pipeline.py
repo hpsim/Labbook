@@ -9,7 +9,7 @@ def get_campaign(config):
     submodule = config["config"]["campaign"]["submodule"]
     with open(".git/modules/Dependencies/" + submodule + "/HEAD") as fh:
         ret = fh.read()
-        return ret.split("/")[-1]
+        return ret.split("/")[-1].replace("\n", "")
 
 
 def execute(arguments, config, logger):
