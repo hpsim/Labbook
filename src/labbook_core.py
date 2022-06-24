@@ -61,7 +61,7 @@ def get_revision(select=None):
             commit, path, branch = ret
         if len(ret) == 2:
             commit, path = ret
-        if sel and sel not in path:
+        if select and select not in path:
             continue
         hashes += commit
 
