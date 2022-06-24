@@ -36,7 +36,7 @@ def execute(arguments, config, logger):
         results = pipeline.get("results")
         if results:
             revision = list(labbook_core.get_revision(get_revision).keys())[0][0:8]
-            results_path = "results/" + campaign + "/" + case
+            results_path = "results/" + campaign + "/" + revision + "/" + case
             os.makedirs(results_path, exist_ok=True)
 
             for results_folder in results:
