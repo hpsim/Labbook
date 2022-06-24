@@ -45,7 +45,7 @@ def execute(steps, path, matrix, logger):
     return True
 
 
-def get_revision():
+def get_revision(select=None):
     submodule_hashes = (
         subprocess.check_output(["git", "submodule", "status"])
         .decode("utf8")
@@ -61,11 +61,12 @@ def get_revision():
             commit, path, branch = ret
         if len(ret) == 2:
             commit, path = ret
+        if sel and sel not in path:
+            continue
         hashes += commit
 
     revision = hashlib.sha1(hashes.encode("utf-8"))
     revision = {
         revision.hexdigest(): {path: commit for commit, path, _ in submodule_hashes}
     }
-    print(revision)
     return revision

@@ -32,10 +32,10 @@ def execute(arguments, config, logger):
 
         labbook_core.execute(steps, path, {}, logger)
         campaign = get_campaign(config)
-
+        get_revision = config.get("revision", {}).get("submodule", None)
         results = pipeline.get("results")
         if results:
-            # revision = list(labbook_core.get_revision().keys())[0][0:8]
+            revision = list(labbook_core.get_revision(get_revision).keys())[0][0:8]
             results_path = "results/" + campaign + "/" + case
             os.makedirs(results_path, exist_ok=True)
 
