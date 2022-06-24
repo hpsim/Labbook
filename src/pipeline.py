@@ -7,13 +7,10 @@ import subprocess
 
 def get_campaign(config):
     submodule = config["config"]["campaign"]["submodule"]
-    cmd = "git submodule foreach".split() + ["'git branch --show-current'"]
-    ret = subprocess.check_output(cmd).decode("utf-8").split("\n")
+    cmd = "cat .git/modules/" + submodule + "/HEAD"
+    ret = subprocess.check_output(cmd.split()).decode("utf-8").split("/")[-1]
     print(ret)
-    for i in range(len(ret) / 2, 2):
-        if submodule in ret[2 * i]:
-            return ret[2 * i + 1]
-    return False
+    return ret
 
 
 def execute(arguments, config, logger):
