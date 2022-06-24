@@ -18,7 +18,7 @@ def parse_variables_impl(in_str, args, domain):
 
 def parse_variables(in_str):
     in_str = parse_variables_impl(in_str, os.environ, "env")
-    in_str = parse_variables_impl(in_str, {"cwd": path, "root": os.getcwd()}, "labbook")
+    in_str = parse_variables_impl(in_str, {"root": os.getcwd()}, "labbook")
     return in_str
 
 
