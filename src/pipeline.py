@@ -7,8 +7,8 @@ import subprocess
 
 def get_campaign(config):
     submodule = config["config"]["campaign"]["submodule"]
-    cmd = "git submodule foreach 'git branch --show-current'"
-    ret = subprocess.check_output(cmd.split(" ")).decode("utf-8").split("\n")
+    cmd = "git submodule foreach".split() + ["'git branch --show-current'"]
+    ret = subprocess.check_output(cmd).decode("utf-8").split("\n")
     print(ret)
     for i in range(len(ret) / 2, 2):
         if submodule in ret[2 * i]:
