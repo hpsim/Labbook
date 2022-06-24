@@ -7,7 +7,7 @@ import subprocess
 
 def get_campaign(config):
     submodule = config["config"]["campaign"]["submodule"]
-    with open(".git/modules/Depencies/" + submodule + "/HEAD") as fh:
+    with open(".git/modules/Dependencies/" + submodule + "/HEAD") as fh:
         ret = fh.read()
         print(ret)
         return ret.split("/")[-1]
