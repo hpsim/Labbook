@@ -5,6 +5,17 @@ import labbook_core
 import subprocess
 
 
+def get_campaign(config):
+    submodule = config["config"]["submodule"]
+    cmd = "git submodule foreach 'git branch --show-current'"
+    ret = subprocess(cmd.split(" ")).decode("utf-8").split("\n")
+    print(ret)
+    for i in range(len(ret) / 2, 2):
+        if submodule in ret[2 * i]:
+            return ret[2 * i + 1]
+    return False
+
+
 def execute(arguments, config, logger):
     """init a new project labbook"""
     pipeline_name = arguments["pipeline"]
@@ -20,11 +31,12 @@ def execute(arguments, config, logger):
         steps = raw_build_command.split("\n")
 
         labbook_core.execute(steps, path, {}, logger)
+        campaign = get_campaign(config)
 
         results = pipeline.get("results")
         if results:
-            revision = list(labbook_core.get_revision().keys())[0][0:8]
-            results_path = "results/" + revision + "/" + case
+            # revision = list(labbook_core.get_revision().keys())[0][0:8]
+            results_path = "results/" + campaign + "/" + case
             os.makedirs(results_path, exist_ok=True)
 
             for results_folder in results:

@@ -9,11 +9,16 @@ import sys
 import subprocess
 
 
-def parse_variables(in_str, args, domain):
-
+def parse_variables_impl(in_str, args, domain):
     ocurrances = re.findall(r"\${{" + domain + "\.(\w+)}}", in_str)
     for inst in ocurrances:
         in_str = in_str.replace("${{" + domain + "." + inst + "}}", args.get(inst, ""))
+    return in_str
+
+
+def parse_variables(in_str):
+    in_str = parse_variables_impl(in_str, os.environ, "env")
+    in_str = parse_variables_impl(in_str, {"cwd": path, "root": os.getcwd()}, "labbook")
     return in_str
 
 
@@ -22,10 +27,9 @@ def execute(steps, path, matrix, logger):
     for step in steps:
         if not step:
             continue
-        step = parse_variables(step, os.environ, "env")
-        step = parse_variables(step, {"cwd": path, "root": os.getcwd()}, "labbook")
-        step = parse_variables(step, matrix, "matrix")
-        logger.info("Execute: " + step + " in " + path)
+        step = parse_variables(step)
+        step = parse_variables_impl(step, matrix, "matrix")
+        logger.info("Execute: " + step + " in " + str(path))
         try:
             process = subprocess.Popen(
                 step.split(" "), cwd=path, stdout=subprocess.PIPE
