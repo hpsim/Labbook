@@ -24,7 +24,19 @@ def parse_variables(in_str):
 
 def execute(steps, path, matrix, logger):
     file_logger = labbook_log.LogFile()
-    for step in steps:
+
+    steps_filt = []
+    # scan through steps and stitch steps with line cont together
+    for i, step in enumerate(steps):
+        if step.endswith("\\"):
+            cleaned = step.replace("\\", " ")
+            steps[i+1] = cleaned + steps[i+1]
+            continue
+        steps_filt.append(step)
+
+    steps_filt = map(lambda x: ' '.join(x.split()), steps_filt)
+
+    for step in steps_filt:
         if not step:
             continue
         step = parse_variables(step)
