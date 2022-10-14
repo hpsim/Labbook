@@ -39,8 +39,8 @@ def execute(steps, path, matrix, logger):
     for step in steps_filt:
         if not step:
             continue
-        step = parse_variables(step)
         step = parse_variables_impl(step, matrix, "matrix")
+        step = parse_variables(step)
         logger.info("Execute: " + step + " in " + str(path))
         try:
             process = subprocess.Popen(
